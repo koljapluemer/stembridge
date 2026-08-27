@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stembridge | Practice</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: system-ui, Arial, sans-serif;
+            line-height: 1.5;
+            margin: 0;
+            padding: 1rem;
+            color: #111;
+            background: #fff;
+        }
+
+        main {
+            max-width: 34rem;
+            margin: 0 auto;
+        }
+
+        h1 {
+            font-size: 1.2rem;
+            margin: 0 0 1rem;
+        }
+
+        #task {
+            font-size: 1rem;
+            margin: 0 0 .25rem;
+        }
+
+        #prompt {
+            margin: .75rem 0 1.25rem;
+            min-height: 3rem;
+        }
+
+        #prompt img {
+            height: 3rem;
+            max-width: 100%;
+        }
+
+        button {
+            font: inherit;
+            display: block;
+            width: 100%;
+            min-height: 3.4rem;
+            padding: .7rem 1rem;
+            margin: .4rem 0;
+            border: 2px solid #333;
+            border-radius: .4rem;
+            background: #f2f2f2;
+            cursor: pointer;
+        }
+
+        #reveal {
+            background: #dfe4ff;
+            font-weight: bold;
+        }
+
+        #options img {
+            height: 2rem;
+            max-width: 100%;
+            vertical-align: middle;
+        }
+
+        button.right {
+            background: #37c871;
+            border-color: #1c8c48;
+        }
+
+        button.wrong {
+            background: #ffdada;
+            border-color: #c0392b;
+        }
+
+        button:disabled {
+            cursor: default;
+            opacity: .55;
+        }
+
+        footer {
+            margin-top: 2rem;
+            font-size: .8rem;
+        }
+
+        footer a {
+            color: #555;
+        }
+    </style>
+</head>
+
+<body>
+    <main>
+        <header><a href="./index.html">&larr; Home</a></header>
+
+        <h1>Practice</h1>
+        <p id="task"></p>
+        <div id="prompt"></div>
+        <button id="reveal" type="button">Reveal answers</button>
+        <div id="options"></div>
+    </main>
+
+    <script src="data/exercises.js"></script>
+    <script>
+        (function () {
+            var EX = window.EXERCISES || [];
+            var taskEl = document.getElementById("task");
+            var promptEl = document.getElementById("prompt");
+            var revealEl = document.getElementById("reveal");
+            var optionsEl = document.getElementById("options");
+            var current = null;
+
+            function shuffle(list) {
+                for (var i = list.length - 1; i > 0; i--) {
+                    var j = Math.floor(Math.random() * (i + 1));
+                    var tmp = list[i];
+                    list[i] = list[j];
+                    list[j] = tmp;
+                }
+                return list;
+            }
+
+            function nextExercise() {
+                optionsEl.innerHTML = "";
+                revealEl.style.display = "";
+
+                if (!EX.length) {
+                    taskEl.textContent = "No exercises found. Run: cd cms && uv run generators/run.py";
+                    promptEl.innerHTML = "";
+                    revealEl.style.display = "none";
+                    return;
+                }
+
+                var pick;
+                do {
+                    pick = EX[Math.floor(Math.random() * EX.length)];
+                } while (EX.length > 1 && current && pick.id === current.id);
+                current = pick;
+
+                taskEl.textContent = pick.task;
+                promptEl.innerHTML = '<img alt="question" src="' + pick.prompt + '">';
+            }
+
+            function revealAnswers() {
+                revealEl.style.display = "none";
+                var opts = shuffle(current.options.slice());
+                for (var i = 0; i < opts.length; i++) {
+                    (function (opt) {
+                        var btn = document.createElement("button");
+                        btn.type = "button";
+                        btn.innerHTML = '<img alt="answer option" src="' + opt.img + '">';
+                        btn.onclick = function () {
+                            if (opt.correct) {
+                                btn.className = "right";
+                                var all = optionsEl.getElementsByTagName("button");
+                                for (var k = 0; k < all.length; k++) all[k].disabled = true;
+                                setTimeout(nextExercise, 500);
+                            } else {
+                                btn.className = "wrong";
+                                btn.disabled = true;
+                            }
+                        };
+                        optionsEl.appendChild(btn);
+                    })(opts[i]);
+                }
+            }
+
+            revealEl.onclick = revealAnswers;
+            nextExercise();
+        })();
+    </script>
+</body>
+
+</html>
