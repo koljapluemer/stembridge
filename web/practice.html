@@ -74,15 +74,16 @@
                     (function (opt) {
                         var btn = document.createElement("button");
                         btn.type = "button";
+                        btn.className = "button";
                         btn.innerHTML = '<img alt="answer option" src="' + opt.img + '">';
                         btn.onclick = function () {
                             if (opt.correct) {
-                                btn.className = "right button";
+                                btn.className = "button right";
                                 var all = optionsEl.getElementsByTagName("button");
                                 for (var k = 0; k < all.length; k++) all[k].disabled = true;
                                 setTimeout(nextExercise, 500);
                             } else {
-                                btn.className = "wrong";
+                                btn.className = "button wrong";
                                 btn.disabled = true;
                             }
                         };

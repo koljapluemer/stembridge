@@ -40,6 +40,12 @@ main {
 }
 
 
+#options {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
 #options img {
     height: 2rem;
     max-width: 100%;
@@ -64,12 +70,11 @@ main {
 
 button.right {
     background: #37c871;
-    border-color: #1c8c48;
 }
 
 button.wrong {
-    background: #ffdada;
-    border-color: #c0392b;
+    opacity: 0.2;
+    background-color: #ccc;
 }
 
 #index {
