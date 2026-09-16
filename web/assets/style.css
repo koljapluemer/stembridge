@@ -2,24 +2,43 @@ html {
     line-height: 1.75;
     font-size: 1.25em;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
-    min-height: 100vh;
-    min-width: 100vw;
+    height: 100%;
+    width: 100%;
     margin: 0;
     padding: 0;
     color: #111;
 }
 
+body {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+a {
+    color: #111;
+    text-decoration-color: #111;
+    text-decoration-style: dotted;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+}
+
+nav {
+    display: flex;
+    gap: 4px;
+}
+
 main {
-    max-width: 70ch;
-    padding: 3em 1em;
-    margin: auto;
+    padding: 12px;
 }
 
-
-#reveal {
-    background: #dfe4ff;
-    font-weight: bold;
-}
 
 #options img {
     height: 2rem;
@@ -69,4 +88,30 @@ button.wrong {
 
 .p {
     padding: 14px;
+}
+
+.b {
+    font-weight: bold;
+}
+
+.card {
+    border-radius: 8px;
+    padding: 12px;
+}
+
+#main-exercise {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 12px;
+    flex: 1;
+}
+
+#exercise {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
 }

@@ -9,16 +9,20 @@
 </head>
 
 <body>
-    <main>
-        <header><a href="./index.html">&larr; Home</a></header>
+    <header class="bg-2 p">
+        <a href="/">Stembridge</a>
+        <nav>
+            <a class="b" href="./practice.html">Practice</a>
+        </nav>
+    </header>
+    <main id="main-exercise">
 
-        <h1>Practice</h1>
-        <section class="card">
+        <section class="card bg" id="exercise">
             <p id="task"></p>
             <div id="prompt"></div>
         </section>
 
-        <button id="reveal" type="button">Reveal answers</button>
+        <button id="reveal" type="button" class="button">Reveal answers</button>
         <div id="options"></div>
     </main>
 
@@ -73,7 +77,7 @@
                         btn.innerHTML = '<img alt="answer option" src="' + opt.img + '">';
                         btn.onclick = function () {
                             if (opt.correct) {
-                                btn.className = "right";
+                                btn.className = "right button";
                                 var all = optionsEl.getElementsByTagName("button");
                                 for (var k = 0; k < all.length; k++) all[k].disabled = true;
                                 setTimeout(nextExercise, 500);
