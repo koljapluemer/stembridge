@@ -1,0 +1,29 @@
+html {
+    max-width: 70ch;
+    padding: 3em 1em;
+    margin: auto;
+    line-height: 1.75;
+    font-size: 1.25em;
+}
+
+
+#reveal {
+    background: #dfe4ff;
+    font-weight: bold;
+}
+
+#options img {
+    height: 2rem;
+    max-width: 100%;
+    vertical-align: middle;
+}
+
+button.right {
+    background: #37c871;
+    border-color: #1c8c48;
+}
+
+button.wrong {
+    background: #ffdada;
+    border-color: #c0392b;
+}

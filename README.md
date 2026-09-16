@@ -1,5 +1,7 @@
 # Stembridge
 
+![](docs/screenshot.webp)
+
 A **low-tech maths practice app**. It has to work in rural settings on old
 phones, so the web side is deliberately plain: hand-written HTML, CSS and
 old-school JavaScript, **no frameworks, no build step, no CDN, no runtime
