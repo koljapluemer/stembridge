@@ -1,0 +1,72 @@
+html {
+    line-height: 1.75;
+    font-size: 1.25em;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    min-height: 100vh;
+    min-width: 100vw;
+    margin: 0;
+    padding: 0;
+    color: #111;
+}
+
+main {
+    max-width: 70ch;
+    padding: 3em 1em;
+    margin: auto;
+}
+
+
+#reveal {
+    background: #dfe4ff;
+    font-weight: bold;
+}
+
+#options img {
+    height: 2rem;
+    max-width: 100%;
+    vertical-align: middle;
+}
+
+.button {
+    background-color: #ffd763;
+    /* border: 2px #111 dashed; */
+    box-shadow: #111 5px 5px 12px;
+    box-shadow: rgba(45, 35, 66, 0.4) 0 2px 4px, rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #111 0 -3px 0 inset;
+    box-sizing: border-box;
+    padding: 12px;
+    font-weight: bold;
+    color: #111 !important;
+    text-decoration: none;
+    border-radius: 8px;
+}
+
+
+
+
+button.right {
+    background: #37c871;
+    border-color: #1c8c48;
+}
+
+button.wrong {
+    background: #ffdada;
+    border-color: #c0392b;
+}
+
+#index {
+    background: center / contain no-repeat fixed url("math_pic.svg");
+
+}
+
+.bg {
+    background-color: #ffd763;
+}
+
+.bg-2 {
+    background-color: #ffeaac;
+
+}
+
+.p {
+    padding: 14px;
+}
