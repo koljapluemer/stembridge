@@ -67,6 +67,14 @@
                 promptEl.innerHTML = '<img alt="question" src="' + pick.prompt + '">';
             }
 
+            function markSolved(id) {
+                try {
+                    var solved = JSON.parse(localStorage.getItem("solved")) || {};
+                    solved[id] = 1;
+                    localStorage.setItem("solved", JSON.stringify(solved));
+                } catch (e) { }
+            }
+
             function revealAnswers() {
                 revealEl.style.display = "none";
                 var opts = shuffle(current.options.slice());
@@ -79,6 +87,7 @@
                         btn.onclick = function () {
                             if (opt.correct) {
                                 btn.className = "button right";
+                                markSolved(current.id);
                                 var all = optionsEl.getElementsByTagName("button");
                                 for (var k = 0; k < all.length; k++) all[k].disabled = true;
                                 setTimeout(nextExercise, 500);

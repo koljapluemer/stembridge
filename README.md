@@ -8,14 +8,27 @@ old-school JavaScript, **no frameworks, no build step, no CDN, no runtime
 libraries**. All maths is pre-rendered to SVG images, so the browser never needs
 a maths font or a formula library.
 
+It is a simple static website, but it is meant to be **hosted** (any static
+file server will do). Opening the files directly via `file://` is not supported:
+the start page loads `data/index.json` over HTTP, and browsers don't reliably
+share saved progress between local files.
+
+To try it locally:
+
+```sh
+cd web
+python3 -m http.server
+```
+
 ```
 stembridge/
-├── web/                     the app (static files, open directly or serve as-is)
-│   ├── index.html
+├── web/                     the app (static files, serve as-is)
+│   ├── index.html           landing page (redirects to start.html once the student has practised)
+│   ├── start.html           start page for returning students, with per-topic progress
 │   ├── practice.html        the practice flow
 │   └── data/                generated — see cms/
-│       ├── exercises.js     window.EXERCISES = [...]   ← the only file the app loads
-│       ├── index.json       manifest (generators, counts, timestamp)
+│       ├── exercises.js     window.EXERCISES = [...]   ← loaded by practice.html
+│       ├── index.json       manifest (generators, counts, timestamp) ← loaded by start.html
 │       └── <slug>.json      one file per generator, for inspection
 └── cms/                     content tooling (Python, managed with uv)
     ├── pyproject.toml
@@ -52,9 +65,8 @@ uv run generators/math/001_bodmas.py
 
 ## How the web app works
 
-`web/practice.html` is ~90 lines of vanilla JS. It loads
-`web/data/exercises.js` with a plain `<script>` tag (works over `file://` too –
-no `fetch`, so it runs when the folder is copied straight onto a phone), then:
+`web/practice.html` is ~100 lines of vanilla JS. It loads
+`web/data/exercises.js` with a plain `<script>` tag, then:
 
 1. Pick a random exercise. Show its task line and the prompt image.
 2. **Reveal answers** → show the 4 options as buttons, in random order.
@@ -62,7 +74,17 @@ no `fetch`, so it runs when the folder is copied straight onto a phone), then:
 4. Click the correct option → it turns green, and after 0.5 s the next random
    exercise loads.
 
-That is the whole flow. No score, no progress, no storage.
+### Progress
+
+When an exercise is answered correctly, its id is saved in `localStorage`
+under the key `solved` (`{"bodmas-03": 1, …}`). There are no accounts – progress
+lives in the student's browser only.
+
+`web/index.html` is the landing page for new visitors. As soon as `solved`
+exists, it redirects to `web/start.html`, which loads `data/index.json` and
+shows one bar per topic: the share
+of that topic's exercises solved at least once. This is deliberately
+simple and a placeholder for a better learning model later.
 
 ## Data format
 
@@ -143,5 +165,5 @@ Rules of the house:
 
 - No external requests from `web/` – no CDN, no web fonts, no analytics.
 - No JS libraries or bundler; keep `practice.html` readable in one screen.
-- Works from `file://` (copied to a phone) as well as from a static host.
+- Works from any plain static host – no server-side code.
 - Keep `exercises.js` small; pre-rendered SVG paths are the bulk of it.

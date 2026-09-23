@@ -7,6 +7,10 @@
   <title>Stembridge</title>
 
   <link rel="stylesheet" href="./assets/style.css">
+  <script>
+    // Returning students skip the landing page.
+    try { if (localStorage.getItem("solved")) location.replace("./start.html"); } catch (e) { }
+  </script>
 </head>
 
 <body id="index">
@@ -18,8 +22,8 @@
     </nav>
   </header>
   <main>
-    <h3 class="bg-2 p">Get ready for the Zimbabwe Math Exam.</h2>
-      <a class="button" href="./practice.html">Start Free Practice</a>
+    <h3 class="bg-2 p">Get ready for the Zimbabwe Math Exam.</h3>
+    <a class="button" href="./practice.html">Start Free Practice</a>
 
   </main>
 </body>

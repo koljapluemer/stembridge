@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Stembridge | Start</title>
+
+  <link rel="stylesheet" href="./assets/style.css">
+</head>
+
+<body>
+
+  <header class="bg-2 p">
+    <a href="./start.html">Stembridge</a>
+    <nav>
+      <a href="./practice.html">Practice</a>
+    </nav>
+  </header>
+  <main>
+    <a class="button" href="./practice.html">Continue Practice</a>
+
+    <section class="card bg-2" id="progress">
+      <p class="b">Your progress</p>
+    </section>
+  </main>
+
+  <script>
+    (function () {
+      var solved = {};
+      try { solved = JSON.parse(localStorage.getItem("solved")) || {}; } catch (e) { }
+
+      var xhr = new XMLHttpRequest();
+      xhr.open("GET", "data/index.json");
+      xhr.onload = function () {
+        var gens = JSON.parse(xhr.responseText).generators;
+        var box = document.getElementById("progress");
+        for (var i = 0; i < gens.length; i++) {
+          var g = gens[i], done = 0;
+          for (var id in solved) if (id.indexOf(g.slug + "-") === 0) done++;
+          var pct = Math.round(100 * Math.min(done, g.count) / g.count);
+          var row = document.createElement("div");
+          row.className = "topic";
+          row.innerHTML = '<span></span> <span class="b">' + pct + '%</span>' +
+            '<div class="bar"><div style="width:' + pct + '%"></div></div>';
+          row.firstChild.textContent = g.title;
+          box.appendChild(row);
+        }
+      };
+      xhr.send();
+    })();
+  </script>
+</body>
+
+</html>
